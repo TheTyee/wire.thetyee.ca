@@ -1,0 +1,5 @@
+.DS_Store
+local
+cpanfile.snapshot
+schema.conf
+sqitch.conf
