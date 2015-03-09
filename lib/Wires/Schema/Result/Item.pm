@@ -203,6 +203,6 @@ __PACKAGE__->belongs_to(
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
-__PACKAGE__->table("wires.items");
+__PACKAGE__->table("wire.items");
 
 1;

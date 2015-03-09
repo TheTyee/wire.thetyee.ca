@@ -145,6 +145,6 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07040 @ 2014-08-03 15:31:48
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bp9uSPQhZ3nTj4B9Adykfg
 
-__PACKAGE__->table("wires.feeds");
+__PACKAGE__->table("wire.feeds");
 
 1;
