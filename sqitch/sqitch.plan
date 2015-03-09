@@ -1,0 +1,8 @@
+%syntax-version=1.0.0-b2
+%project=wires.thetyee.ca
+%uri=https://github.com/phillipadsmith/wires.thetyee.ca
+
+appschema 2014-08-03T21:00:35Z Phillip Smith <ps@phillipadsmith.com> # Adding the schema
+categories [appschema] 2014-08-06T17:11:38Z Phillip Smith <ps@phillipadsmith.com> # Table for categories
+sources [appschema categories] 2014-08-03T21:00:47Z Phillip Smith <ps@phillipadsmith.com> # Adding Sources table
+items [appschema sources] 2014-08-03T21:01:06Z Phillip Smith <ps@phillipadsmith.com> # Adding Items table
