@@ -3,3 +3,4 @@ local
 cpanfile.snapshot
 schema.conf
 sqitch.conf
+bower_components
