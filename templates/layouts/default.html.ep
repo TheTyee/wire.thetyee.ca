@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <title><%= $title %></title>
+        <!--<link rel="stylesheet" href="css/app.css">-->
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+        <script src="/bower_components/jquery/jquery.min.js"></script>
+        <script src="/bower_components/underscore/underscore.js"></script>
+        <script src="/bower_components/moment/moment.js"></script>
+        <script src="/bower_components/handlebars/handlebars.js"></script>
+        <script src="/bower_components/backbone/backbone.js"></script>
+        <script src="/bower_components/layoutmanager/backbone.layoutmanager.js"></script>
+        <script src="/bower_components/backbone.stickit/backbone.stickit.js"></script>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <header></header>
+        <%= content %>
+        <footer></footer>
+    <script>
+    $(function() {
+        // Initialize the Backbone router.
+        App.router = new App.Router();
+        Backbone.history.start();
+    });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+% layout 'default', title => 'BC News Wire: A live feed BC Blogs - Sources';
+
+<style>
+     li.editing .edit {
+	display: block;
+	width: 444px;
+	padding: 13px 15px 14px 20px;
+	margin: 0;
+        background-color: #eee;
+}
+
+li.editing .view {
+	display: none;
+}
+
+li .view label {
+	word-break: break-word;
+}
+
+li .edit {
+	display: none;
+}
+.destroy {
+	position: relative;
+        float: left;
+	display: none;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	background: url(/img/destroy.png) no-repeat;
+}
+
+li:hover .destroy {
+  	display: block;
+}
+
+.destroy:hover {
+  	background-position: 0 -20px;
+    }
+</style>
+                    <div id="content">
+                    </div>
+<script>
+    var sources = <%== $sources_json %>;
+</script>
+<script src="/js/app/app.js"></script>
