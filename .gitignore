@@ -4,3 +4,5 @@ cpanfile.snapshot
 schema.conf
 sqitch.conf
 bower_components
+app.development.json
+app.preview.json
