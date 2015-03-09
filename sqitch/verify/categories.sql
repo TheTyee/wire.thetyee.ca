@@ -3,7 +3,7 @@
 BEGIN;
 
     SELECT id, name, description, status
-        FROM wires.categories
+        FROM wire.categories
     WHERE FALSE;
 
 ROLLBACK;

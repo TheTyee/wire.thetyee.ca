@@ -3,7 +3,7 @@
 BEGIN;
 
     SELECT id, name, description, category -- Could add more
-      FROM wires.sources
+      FROM wire.sources
      WHERE FALSE;
 
 ROLLBACK;

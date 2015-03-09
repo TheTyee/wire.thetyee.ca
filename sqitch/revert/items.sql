@@ -2,6 +2,6 @@
 
 BEGIN;
 
-    DROP TABLE wires.items;
+    DROP TABLE wire.items;
 
 COMMIT;

@@ -4,13 +4,13 @@
 
 BEGIN;
 
-    CREATE TABLE wires.sources (
+    CREATE TABLE wire.sources (
         id              SERIAL  UNIQUE PRIMARY KEY,
         url             TEXT    NOT NULL UNIQUE,
         name            TEXT    NOT NULL, 
         description     TEXT    NULL,
         image           TEXT    NULL,
-        category        TEXT REFERENCES wires.categories (id),
+        category        TEXT REFERENCES wire.categories (id),
         contact_name    TEXT    NULL,
         contact_email   TEXT    NULL,
         status          TEXT    NULL,

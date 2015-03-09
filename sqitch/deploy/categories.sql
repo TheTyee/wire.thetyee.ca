@@ -3,7 +3,7 @@
 
 BEGIN;
 
-    CREATE TABLE wires.categories (
+    CREATE TABLE wire.categories (
         id          TEXT UNIQUE PRIMARY KEY,
         name        TEXT NOT NULL,
         description TEXT NULL,

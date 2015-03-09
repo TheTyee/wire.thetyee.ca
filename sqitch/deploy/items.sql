@@ -4,7 +4,7 @@
 
 BEGIN;
 
-    CREATE TABLE wires.items (
+    CREATE TABLE wire.items (
         id          SERIAL UNIQUE PRIMARY KEY,
         url         TEXT UNIQUE NOT NULL,
         title       TEXT NOT NULL,
@@ -18,7 +18,7 @@ BEGIN;
         count_fb    INT NOT NULL DEFAULT 0,
         count_li    INT NOT NULL DEFAULT 0,
         count_go    INT NOT NULL DEFAULT 0,
-        source_id     integer REFERENCES wires.sources (id) ON DELETE CASCADE
+        source_id     integer REFERENCES wire.sources (id) ON DELETE CASCADE
     );
 
 COMMIT;

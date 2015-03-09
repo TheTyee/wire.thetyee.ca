@@ -2,6 +2,6 @@
 
 BEGIN;
 
-    DROP table wires.sources;
+    DROP table wire.sources;
 
 COMMIT;
