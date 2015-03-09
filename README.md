@@ -13,7 +13,8 @@ BC Blogs Re-born for 2015
 * [x] Implement "more" interaction to update collection
 * [x] Migrate to async fetch for templates in development mode
 * [x] Re-write app.js to use Backbone Layout Manager for sources
+* [x] Add route for /categories
+* [x] Add route for /hot
 * [ ] /source/:id should use a sub-view for the items 
 * [ ] dates need to be put in the right timezone! 
-* [ ] Add route for /categories
-* [ ] Add route for /hot
+* [ ] Remove debugging statements!
