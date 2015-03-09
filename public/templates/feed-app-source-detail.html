@@ -1,0 +1,12 @@
+<div class="view">
+  <a class="destroy"></a>
+  <h3><label><a href="<%= url %>"><%= name %></a></label></h3>
+    <h4><%= description %></h4>
+    <p>Filed in: <%= category_name %></p>
+    <p>ID: <%= id %></p>
+    <p>Last Checked: <%= feed_updated %></p>
+</div>
+<input name="name" class="edit input-name" type="text" value="<%= name %>" />
+<input name="description" class="edit input-description" type="text" value="<%= description %>" />
+<div id="items">
+</div>

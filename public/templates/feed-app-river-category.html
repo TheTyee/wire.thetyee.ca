@@ -1,0 +1,6 @@
+    <% // This is very yucky %>
+    <% _.each( items, function(item){ %> 
+    <li class="category-item">
+        <a href="#category/<%= item.attributes.id %>"><%= item.attributes.name %></a>
+    </li>
+    <% }); %>
