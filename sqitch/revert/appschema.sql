@@ -2,7 +2,7 @@
 
 BEGIN;
 
-DROP SCHEMA wires;
+DROP SCHEMA wire;
 
 COMMIT;
 

@@ -2,6 +2,6 @@
 
 BEGIN;
 
-CREATE SCHEMA wires;
+CREATE SCHEMA wire;
 
 COMMIT;
