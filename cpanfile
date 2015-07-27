@@ -8,6 +8,7 @@ requires 'DBIx::Class::Schema::Loader', '0';
 requires 'DBIx::Class::TimeStamp', '0';
 requires 'Feed::Find', '0';
 requires 'HTML::Content::Extractor', '0';
+requires 'HTML::Entities', '0';
 requires 'HTTP::Date', '0';
 requires 'JSON', '0';
 requires 'Lingua::EN::Summarize', '0';
