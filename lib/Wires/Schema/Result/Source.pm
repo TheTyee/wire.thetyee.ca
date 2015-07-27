@@ -42,7 +42,7 @@ __PACKAGE__->table("sources");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'wires.sources_id_seq'
+  sequence: 'wire.sources_id_seq'
 
 =head2 url
 
@@ -83,6 +83,7 @@ __PACKAGE__->table("sources");
 =head2 status
 
   data_type: 'text'
+  default_value: 'active'
   is_nullable: 1
 
 =head2 source_updated
@@ -109,7 +110,7 @@ __PACKAGE__->add_columns(
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "wires.sources_id_seq",
+    sequence          => "wire.sources_id_seq",
   },
   "url",
   { data_type => "text", is_nullable => 0 },
@@ -126,7 +127,7 @@ __PACKAGE__->add_columns(
   "contact_email",
   { data_type => "text", is_nullable => 1 },
   "status",
-  { data_type => "text", is_nullable => 1 },
+  { data_type => "text", default_value => "active", is_nullable => 1 },
   "source_updated",
   {
     data_type     => "timestamp",
@@ -152,18 +153,6 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
-
-=head2 C<sources_feed_url_key>
-
-=over 4
-
-=item * L</feed_url>
-
-=back
-
-=cut
-
-__PACKAGE__->add_unique_constraint("sources_feed_url_key", ["feed_url"]);
 
 =head2 C<sources_url_key>
 
@@ -215,8 +204,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07040 @ 2014-08-06 17:09:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:m/rrdfG0xvfsEqgNcsexww
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-07-26 10:11:16
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uCgNMRovhhZlQcuUKLAYfQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

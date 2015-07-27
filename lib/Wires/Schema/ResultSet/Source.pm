@@ -10,10 +10,12 @@ sub get_sources {
     my ( $self, $category ) = @_;
     my $schema = $self->result_source->schema;
     my @sources = $self->search(
-        {   (   defined $category
+        {   
+            (   defined $category
                 ? ( category => $category )
                 : ()
-            )
+            ),
+            'me.status' => 'active',
         },
         {   
             #group_by => [qw/ category name  id /], # This is not working because of overlapping table names

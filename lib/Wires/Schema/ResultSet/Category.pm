@@ -10,7 +10,9 @@ sub get_categories {
     my ( $self ) = @_;
     my $schema = $self->result_source->schema;
     my @cats = $self->search(
-        {},
+        {
+            'me.status' => 'active',
+        },
         {   
             #order_by => { -asc => 'name' },
             # Recommended way to send simple data to a template vs. sending the ResultSet object

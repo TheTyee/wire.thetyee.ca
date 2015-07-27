@@ -30,6 +30,7 @@ sub get_items {
                 : ()
             ),
             pubdate => { '<=' => $dtf->format_datetime($now) }, # Don't return items from the future! :)
+            'me.status' => 'active',
         },
         {   page => $page || 1,     # page to return (default: 1)
             rows => $limit || 20,    # number of results per page (default: 50)

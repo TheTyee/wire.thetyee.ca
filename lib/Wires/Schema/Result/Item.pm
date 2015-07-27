@@ -42,7 +42,7 @@ __PACKAGE__->table("items");
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'wires.items_id_seq'
+  sequence: 'wire.items_id_seq'
 
 =head2 url
 
@@ -82,26 +82,37 @@ __PACKAGE__->table("items");
 =head2 count_tw
 
   data_type: 'integer'
-  is_nullable: 1
+  default_value: 0
+  is_nullable: 0
 
 =head2 count_su
 
   data_type: 'integer'
-  is_nullable: 1
+  default_value: 0
+  is_nullable: 0
 
 =head2 count_fb
 
   data_type: 'integer'
-  is_nullable: 1
+  default_value: 0
+  is_nullable: 0
 
 =head2 count_li
 
   data_type: 'integer'
-  is_nullable: 1
+  default_value: 0
+  is_nullable: 0
 
 =head2 count_go
 
   data_type: 'integer'
+  default_value: 0
+  is_nullable: 0
+
+=head2 status
+
+  data_type: 'text'
+  default_value: 'active'
   is_nullable: 1
 
 =head2 source_id
@@ -118,7 +129,7 @@ __PACKAGE__->add_columns(
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "wires.items_id_seq",
+    sequence          => "wire.items_id_seq",
   },
   "url",
   { data_type => "text", is_nullable => 0 },
@@ -135,15 +146,17 @@ __PACKAGE__->add_columns(
   "pubdate",
   { data_type => "timestamp", is_nullable => 0 },
   "count_tw",
-  { data_type => "integer", is_nullable => 1 },
+  { data_type => "integer", default_value => 0, is_nullable => 0 },
   "count_su",
-  { data_type => "integer", is_nullable => 1 },
+  { data_type => "integer", default_value => 0, is_nullable => 0 },
   "count_fb",
-  { data_type => "integer", is_nullable => 1 },
+  { data_type => "integer", default_value => 0, is_nullable => 0 },
   "count_li",
-  { data_type => "integer", is_nullable => 1 },
+  { data_type => "integer", default_value => 0, is_nullable => 0 },
   "count_go",
-  { data_type => "integer", is_nullable => 1 },
+  { data_type => "integer", default_value => 0, is_nullable => 0 },
+  "status",
+  { data_type => "text", default_value => "active", is_nullable => 1 },
   "source_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
 );
@@ -197,8 +210,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07040 @ 2014-08-03 17:13:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0Q8jY3L1TZGKT+9XonmdJA
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-07-26 18:51:58
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:v3xEnDw/rmKh8TRTVnNRqw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -206,3 +219,4 @@ __PACKAGE__->belongs_to(
 __PACKAGE__->table("wire.items");
 
 1;
+

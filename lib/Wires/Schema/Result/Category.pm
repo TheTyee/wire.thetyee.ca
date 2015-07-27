@@ -55,6 +55,7 @@ __PACKAGE__->table("categories");
 =head2 status
 
   data_type: 'text'
+  default_value: 'active'
   is_nullable: 1
 
 =cut
@@ -67,7 +68,7 @@ __PACKAGE__->add_columns(
   "description",
   { data_type => "text", is_nullable => 1 },
   "status",
-  { data_type => "text", is_nullable => 1 },
+  { data_type => "text", default_value => "active", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -100,8 +101,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07040 @ 2014-08-06 17:09:21
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BqtT11owr+TbRa9sBqParQ
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-07-26 10:11:16
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:MpN8b0XZvmbvLaTYFguVSA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
