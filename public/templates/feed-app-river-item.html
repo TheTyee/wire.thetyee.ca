@@ -1,7 +1,11 @@
 <div class="river-item">
     <a href="<%= url %>"><h1 data-bind="title"></h1></a>
+    <p data-bind="description"></p>
     <p>By <% if ( author ) {  print( author + ', ') }; %><a href="#sources/<%= source_id%>"><%= source_name %></a></p>
-    <p><%= description %></p>
     <p>Posted <%= friendlydate %> in <a href="#category/<%= category %>"><%= category_name %></a>. <% if ( shares > 1 ) { print ( 'Shared ' + shares + ' times.')} %></p>
-    <input style="display:none;" type="text" data-bind="title" />
+    <input class="hidden" type="text" data-bind="title" />
+    <input class="hidden" data-bind="description" />
+    <button class="save hidden">Save</button>
+    <button class="edit">Edit</button>
+    <button class="delete">Delete</button>
 </div>
