@@ -271,20 +271,18 @@ post '/categories' => sub {    # Create
 
 any [ 'put', 'patch' ] => '/categories/:id' => sub {  # Update full or partial
     my $self = shift;
-
-    #my $id     = $self->stash( 'id' );
-    #my $schema = $self->schema;
-    #my $json   = $self->req->json;
-    #my $source = $schema->resultset( 'Source' )->find( $id );
-    #if ( $source ) {
-    #my $result = $source->update( $json );
-    #$self->res->code( 200 );
-    #$self->render( json => { id => $result->id } );
-    #}
-    #else {
-    #$self->res->code( 422 );
-    #$self->render( json => { error => "Unable to update source." } );
-    #}
+    my $id     = $self->stash( 'id' );
+    my $schema = $self->schema;
+    my $json   = $self->req->json;
+    my $category = $schema->resultset( 'Category' )->find( $id );
+    if ( $category ) {
+        my $result = $category->update( $json );
+        $self->res->code( 200 );
+        $self->render( json => { id => $result->id } );
+    } else {
+        $self->res->code( 422 );
+        $self->render( json => { error => "Unable to update category" } );
+    }
 };
 
 any ['delete'] => '/categories/:id' => sub {    # Delete
