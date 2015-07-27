@@ -13,7 +13,7 @@ BEGIN;
         category        TEXT REFERENCES wire.categories (id),
         contact_name    TEXT    NULL,
         contact_email   TEXT    NULL,
-        status          TEXT    NULL,
+        status          TEXT    DEFAULT 'active',
         source_updated  TIMESTAMP without time zone default (now() at time zone 'utc') NOT NULL,
         feed_url        TEXT        NULL,
         feed_updated    TIMESTAMP   NULL

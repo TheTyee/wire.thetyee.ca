@@ -18,6 +18,7 @@ BEGIN;
         count_fb    INT NOT NULL DEFAULT 0,
         count_li    INT NOT NULL DEFAULT 0,
         count_go    INT NOT NULL DEFAULT 0,
+        status      TEXT DEFAULT 'active',
         source_id     integer REFERENCES wire.sources (id) ON DELETE CASCADE
     );
 

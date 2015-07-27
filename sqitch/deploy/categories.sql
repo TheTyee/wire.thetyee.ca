@@ -7,7 +7,7 @@ BEGIN;
         id          TEXT UNIQUE PRIMARY KEY,
         name        TEXT NOT NULL,
         description TEXT NULL,
-        status      TEXT NULL
+        status      TEXT DEFAULT 'active'
     );
 
 COMMIT;
