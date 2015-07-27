@@ -33,19 +33,6 @@ my @items = $dbh->resultset( 'Item' )->search({}, { order_by => { -desc => 'pubd
 
 for my $item ( @items ) {
     my $ua = Mojo::UserAgent->new;
-    #next unless $item->url =~ 'feedproxy';
-    if ( $item->url =~ 'feedproxy.google.com' ) {
-        #say "Got a feedproxy.google.com url";
-        my $res = $ua->max_redirects( 0 )->get( $item->url )->res;
-        #say Dumper( $res );
-        #say $res->code;
-        my $location = $res->headers->location;
-        my $url = Mojo::URL->new($location);
-        say 'Fixing ' . $item->url;
-        #say 'Setting to: ' . $url->scheme . '://' . $url->host . $url->path; 
-        $item->url( $url->scheme . '://' . $url->host . $url->path );
-        say '$item->url is now: ' . $item->url;
-    }
     my $counts
         = $ua->max_redirects( 5 )->get( $API . '?url=' . $item->url . '&apikey=' . $api_key => { DNT => 1 } )
         ->res->json;
