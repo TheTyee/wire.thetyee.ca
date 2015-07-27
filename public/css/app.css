@@ -1,0 +1,11 @@
+.editing {
+    background: yellow;
+}
+
+.editing .edit-form {
+    display: block !important;
+}
+
+.editing .edit-buttons {
+    display: none;
+}
