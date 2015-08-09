@@ -464,7 +464,7 @@ App.Router = Backbone.Router.extend({
         '' : 'start',
         'sources/:id' : 'displaySource',
         'sources' : 'displaySources',
-        'categoryies' : 'displayCategories',
+        'categories' : 'displayCategories',
         'category/:id' : 'displayCategory',
         'hot'          : 'displayHot',
         'hot/:id'      :  'displayHotCategory',
@@ -492,6 +492,7 @@ App.Router = Backbone.Router.extend({
     },
     displayCategories: function() {
         console.log('displaying categories');
+        // TODO 
         //  App.Layout.setView("#app-content", new App.SourcesView() );
         //  App.Layout.render();
     },
