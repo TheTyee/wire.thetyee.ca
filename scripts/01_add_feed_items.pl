@@ -55,7 +55,6 @@ for my $source ( @sources ) {
         if ( $item->link() =~ 'feedproxy.google.com' ) {
             say "Got a feedproxy.google.com url";
             my $res = $ua->max_redirects( 0 )->get( $item->link() )->res;
-            #say Dumper( $res );
             say $res->code;
             my $location = $res->headers->location;
             my $url = Mojo::URL->new($location);
@@ -78,7 +77,6 @@ for my $source ( @sources ) {
         $status = 1;
         next if $dbh->resultset( 'Item' )->find({ url => $canonical });
         my $json = $ua->max_redirects( 5 )->get( $ALCHEMY_API . "apikey=$config->{'alchemy_api_key'}" . $ALCHEMY_QUERY . $canonical => { DNT => 1 } )->res->json;
-        say Dumper( $json );
         my $doc = {
             url     => $canonical || '',
             title   => decode_entities( $item->title() ) || '',
@@ -94,7 +92,6 @@ for my $source ( @sources ) {
             source_id => $source->id() || '',
         };
         say $doc->{'title'} if $mode eq 'development';
-        #say Dumper( $doc ) if $mode eq 'development';
         _store_item( $doc );
         $item_count++;
     }
@@ -120,7 +117,6 @@ sub _dbh {
 
 sub _store_item {
     my $doc = shift;
-    #say Dumper( $doc ) if $mode eq 'development';
     my $result;
     try {
         $result = $dbh->txn_do(
