@@ -15,6 +15,7 @@ BC Blogs Re-born for 2015
 * [x] Output list of items by "hot" (social counts)
 * [x] Fix issue where feed item is updated to a new URL, but when looking for new items its reimported with the old URL (move fix into the item collection script)
 * [x] Add status column to items table, so that items can also be set to deleted (so they are not re-added on the next check/run)
+* [x] Finish routes for /categories
 * [ ] Switch to Readability Parser API, e.g., https://www.readability.com/api/content/v1/parser?url=http://www.desmogblog.com/2015/07/26/mother-nature-braces-republican-environmental-onslaught&token=ae9e3e6f9e15346638b5b54b3af3710a24cd854c
 
 ## Front end
@@ -25,6 +26,7 @@ BC Blogs Re-born for 2015
 * [x] Re-write app.js to use Backbone Layout Manager for sources
 * [x] Add route for /categories
 * [x] Add route for /hot
+* [ ] Remove the category-header template; do something smarter...
 * [ ] /source/:id should use a sub-view for the items 
 * [ ] dates need to be put in the right timezone! 
 
