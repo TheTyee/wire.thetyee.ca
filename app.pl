@@ -35,12 +35,12 @@ helper schema => sub {
 get '/' => sub {
     my $self    = shift;
     my $items   = $self->schema->resultset( 'Item' )->get_items();
-    my $sources = $self->schema->resultset( 'Source' )->get_sources();
+    #my $sources = $self->schema->resultset( 'Source' )->get_sources();
     my $cats    = $self->schema->resultset( 'Category' )->get_categories();
     my $json
         = JSON->new->allow_nonref;    # Using JSON module for proper encoding
     my $items_json   = $json->encode( $items );
-    my $sources_json = $json->encode( $sources );
+    #my $sources_json = $json->encode( $sources );
     my $cats_json    = $json->encode( $cats );
 
     #$self->app->log->debug( $sources_json );
@@ -49,7 +49,7 @@ get '/' => sub {
     #my $items_json = $j->encode($items);
     $self->stash(
         {   items   => $items_json,
-            sources => $sources_json,
+            #sources => $sources_json,
             cats    => $cats_json
         }
     );
@@ -60,11 +60,12 @@ get '/' => sub {
 get '/items' => sub {
     my $self     = shift;
     my $category = $self->param( 'category' ) || undef;
+    my $hot      = $self->param( 'hot' ) || undef;
     my $page     = $self->param( 'page' );
     my $limit    = $self->param( 'limit' );
-    $self->app->log->debug( $category );
+    #$self->app->log->debug( $category );
     my $items = $self->schema->resultset( 'Item' )
-        ->get_items( $category, $page, $limit );
+        ->get_items( $category, $page, $limit, $hot );
     $self->respond_to(
         json => sub {
             $self->render( json => $items ), status => 200;
@@ -140,8 +141,10 @@ any ['delete'] => '/items/:id' => sub {    # Delete
 get '/sources' => sub {    # Read collection
     my $self     = shift;
     my $rs       = $self->schema->resultset( 'Source' );
-    my $category = $self->param( 'category' );
-    my $sources  = $rs->get_sources( $category );
+    my $category = $self->param( 'category' ) || undef;
+    my $page     = $self->param( 'page' );
+    my $limit    = $self->param( 'limit' );
+    my $sources  = $rs->get_sources( $category, $page, $limit );
 
     # Not using this currently...
     my $json
