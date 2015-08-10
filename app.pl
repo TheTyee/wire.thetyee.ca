@@ -34,7 +34,7 @@ helper schema => sub {
 
 get '/' => sub {
     my $self    = shift;
-    my $items   = $self->schema->resultset( 'Item' )->get_items();
+    my $items   = $self->schema->resultset( 'Item' )->get_items(undef,undef,undef,1);
     #my $sources = $self->schema->resultset( 'Source' )->get_sources();
     my $cats    = $self->schema->resultset( 'Category' )->get_categories();
     my $json
