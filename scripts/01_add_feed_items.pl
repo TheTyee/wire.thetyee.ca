@@ -29,6 +29,8 @@ my $conf   = Config::JFDI->new( name => "app.$mode", path => "$Bin/../" );
 my $config = $conf->get;
 my $ALCHEMY_API = 'http://access.alchemyapi.com/calls/url/URLGetCombinedData?';
 my $ALCHEMY_QUERY = '&extract=page-image,entity,keyword,taxonomy&showSourceText=1&quotations=1&outputMode=json&url=';
+my $READABILITY_API = 'http://readability.com/api/content/v1/parser?url=';
+# GET /api/content/v1/parser?url=http://blog.readability.com/2011/02/step-up-be-heard-readability-ideas/&token=1b830931777ac7c2ac954e9f0d67df437175e66e
 my $dtformat = 'DateTime::Format::HTTP';
 my $dbh   = _dbh();
 my @sources = $dbh->resultset( 'Source' )->search()->all();
@@ -76,18 +78,26 @@ for my $source ( @sources ) {
         next unless $date_cmp == 1;
         $status = 1;
         next if $dbh->resultset( 'Item' )->find({ url => $canonical });
-        my $json = $ua->max_redirects( 5 )->get( $ALCHEMY_API . "apikey=$config->{'alchemy_api_key'}" . $ALCHEMY_QUERY . $canonical => { DNT => 1 } )->res->json;
+        #my $json = $ua->max_redirects( 5 )->get( $ALCHEMY_API . "apikey=$config->{'alchemy_api_key'}" . $ALCHEMY_QUERY . $canonical => { DNT => 1 } )->res->json;
+        my $json = $ua->max_redirects( 5 )->get( $READABILITY_API . $canonical . "&token=$config->{'readability_api_key'}" => { DNT => 1 } )->res->json;
+        say Dumper( $json ) if $mode eq 'development';
+        # TODO some sensible sub for checking edge-case images
+        # No /image_feed/ 
+        # Others...
         my $doc = {
             url     => $canonical || '',
             title   => decode_entities( $item->title() ) || '',
             pubdate => $item->pubDate() || '',
-            description => summarize(
-                decode_entities( $json->{'text'} ),
-                #filter    => 'html',
-                maxlength => 100
-            ) || '',
-            content => $json->{'text'} || '',
-            image   => $json->{'image'} || '',
+            #description => summarize(
+                #decode_entities( $json->{'text'} ),
+                ##filter    => 'html',
+                #maxlength => 100
+            #) || '',
+            description => decode_entities( $json->{'excerpt'} ),
+            #content => $json->{'text'} || '',
+            content => $json->{'content'},
+            #image   => $json->{'image'} || '',
+            image   => $json->{'lead_image_url'},
             author  => $item->author() || '',
             source_id => $source->id() || '',
         };
