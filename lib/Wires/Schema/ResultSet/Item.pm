@@ -16,7 +16,7 @@ sub get_item {
 }
 
 sub get_items {
-    my ( $self, $category, $page, $limit, $source_id ) = @_;
+    my ( $self, $category, $page, $limit, $hot, $source_id ) = @_;
     my $schema = $self->result_source->schema;
     my $dtf = $schema->storage->datetime_parser;
     my $now = DateTime->now( time_zone => 'America/Vancouver' );
@@ -34,7 +34,11 @@ sub get_items {
         },
         {   page => $page || 1,     # page to return (default: 1)
             rows => $limit || 20,    # number of results per page (default: 50)
-            order_by => { -desc => 'pubdate' },
+            ( defined $hot
+                    ? ( order_by => [
+                        { -desc => 'count_tw + count_fb + count_go + count_li + count_su' }, { -desc => 'pubdate' } ],
+                ) : ( order_by => { -desc => 'pubdate' }, )
+            ),
             join => { source => 'category' },
             #'+select' => [ 'category.name' ],
             #'+as'     => [ 'cateogry_name'],
