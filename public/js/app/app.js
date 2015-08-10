@@ -111,22 +111,6 @@ _.each(items_json, function(item) {
     App.feedItems.add(item);
 });
 
-App.HotItemCollection = Backbone.Collection.extend({
-    model: App.FeedItem,
-    page: 1,
-    limit: 20,
-    category: '',
-    url: function(){
-        return '/hot/' + '?limit=' + this.limit + '&page=' + this.page + '&category=' + this.category;
-    },
-    initialize: function(options){
-        if ( options && options.category ) {
-            this.set("category", options.category);
-        }
-    } //,
-    // comparator: '-pubdate'
-});
-
 App.SourceCollection = Backbone.Collection.extend({
     model: App.Source,
     page: 1,
@@ -554,8 +538,6 @@ App.Router = Backbone.Router.extend({
         'sources' : 'displaySources',
         'categories' : 'displayCategories',
         'category/:id' : 'displayCategory',
-        'hot'          : 'displayHot',
-        'hot/:id'      :  'displayHotCategory',
         '*default': 'defaultRoute'
     },
     start: function() {
@@ -598,26 +580,6 @@ App.Router = Backbone.Router.extend({
         //        source.fetch(function(model, response, options){ console.log(response); },function(model, response, options){ console.log(response); } );
         App.Layout.setView("#app-content", new App.FeedRiverView({ collection: App.categoryItems }));
         App.Layout.setView("header", new App.CategoryHeaderView({ model: category }));
-        App.Layout.render();
-
-    },
-    displayHot: function() {
-        console.log('displaying hot');
-        App.hotItems = new App.HotItemCollection();
-        App.hotItems.fetch();
-        App.Layout.setView("#app-content", new App.FeedRiverView({ collection: App.hotItems }) );
-        App.Layout.setView("footer", new App.FeedNavigationView({ collection: App.hotItems }) );
-        App.Layout.render();
-    },
-    displayHotCategory: function(id) {
-        console.log('displaying hot category id ' + id );
-        App.categoryItems = new App.HotItemCollection();
-        App.categoryItems.category = id;
-        App.categoryItems.fetch();
-        //        var source = App.sources.get(id);
-        //        source.fetch(function(model, response, options){ console.log(response); },function(model, response, options){ console.log(response); } );
-        App.Layout.setView("#app-content", new App.FeedRiverView({ collection: App.categoryItems }));
-        App.Layout.setView("footer", new App.FeedNavigationView({ collection: App.categoryItems }));
         App.Layout.render();
 
     },
