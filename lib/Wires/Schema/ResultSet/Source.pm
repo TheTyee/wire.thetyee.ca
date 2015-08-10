@@ -7,7 +7,7 @@ use warnings;
 use parent 'DBIx::Class::ResultSet';
 
 sub get_sources {
-    my ( $self, $category ) = @_;
+    my ( $self, $category, $page, $limit ) = @_;
     my $schema = $self->result_source->schema;
     my @sources = $self->search(
         {   
@@ -19,7 +19,10 @@ sub get_sources {
         },
         {   
             #group_by => [qw/ category name  id /], # This is not working because of overlapping table names
-            order_by => { -asc => 'category' },
+            page => $page || 1,     # page to return (default: 1)
+            rows => $limit || 10,    # number of results per page (default: 50)
+            #order_by => { -asc => 'category' },
+            order_by => { -asc => 'me.name' },
             join => [qw / category /],
             '+select' => [ 'category.name'],
             '+as'     => [ 'category_name' ],
@@ -57,7 +60,7 @@ sub get_source {
             '+as'     => [ 'category_name' ],
             result_class => 'DBIx::Class::ResultClass::HashRefInflator' } )->single;
     my $items    = $schema->resultset( 'Item' )
-        ->get_items( undef, undef, undef, $id );
+        ->get_items( undef, undef, undef, undef, $id );
         $source->{'items'} = $items;
     return $source;
 }
