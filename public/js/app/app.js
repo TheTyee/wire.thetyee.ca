@@ -103,7 +103,7 @@ App.FeedItemCollection = Backbone.Collection.extend({
             this.set("category", options.category);
         }
     },
-    comparator: '-pubdate'
+    //comparator: '-pubdate'
 });
 
 App.feedItems = new App.FeedItemCollection();
