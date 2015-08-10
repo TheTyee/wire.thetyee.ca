@@ -1,5 +1,8 @@
 <div class="river-item">
     <a href="<%= url %>"><h1 data-bind="title"></h1></a>
+    <% if ( image ) { %>
+    <img src="<%= image %>" style="width:100%;max-width:600px;" />
+    <% } %>
     <p data-bind="description"></p>
     <p>By <% if ( author ) {  print( author + ', ') }; %><a href="#sources/<%= source_id%>"><%= source_name %></a></p>
     <p>Posted <%= friendlydate %> in <a href="#category/<%= category %>"><%= category_name %></a>. <% if ( shares > 1 ) { print ( 'Shared ' + shares + ' times.')} %></p>
