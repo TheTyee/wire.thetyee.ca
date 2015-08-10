@@ -63,7 +63,6 @@ get '/items' => sub {
     my $hot      = $self->param( 'hot' ) || undef;
     my $page     = $self->param( 'page' );
     my $limit    = $self->param( 'limit' );
-    #$self->app->log->debug( $category );
     my $items = $self->schema->resultset( 'Item' )
         ->get_items( $category, $page, $limit, $hot );
     $self->respond_to(
@@ -303,22 +302,6 @@ any ['delete'] => '/categories/:id' => sub {    # Delete
     #$self->res->code( 422 );
     #$self->render( json => { error => "Unable to delete source." } );
     #}
-};
-
-# Get hot items, with optional limit or page
-get '/hot' => sub {
-    my $self     = shift;
-    my $category = $self->param( 'category' ) || undef;
-    my $page     = $self->param( 'page' );
-    my $limit    = $self->param( 'limit' );
-    my $items    = $self->schema->resultset( 'Item' )
-        ->get_items_hot( $category, $page, $limit );
-    $self->respond_to(
-        json => sub {
-            $self->render( json => $items ), status => 200;
-        },
-        any => { text => '', status => 204 }
-    );
 };
 
 app->secrets( [ $config->{'app_secret'} ] );
