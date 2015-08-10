@@ -1,16 +1,12 @@
-<div class="source-item">
-    <div class="source-item-details">
-        <a href="#sources/<%= id %>"><h2 data-bind="name"></h2></a>
+<div class="category-item">
+    <div class="category-item-details">
+        <a href=""><h2 data-bind="name"></h2></a>
         <p data-bind="description"></p>
-        <p>Filed in: <span data-bind="category"></span></p>
         <p>ID: <%= id %></p>
     </div>
     <div class="edit-form hidden">
         <input data-bind="name" name="name" class="edit input-name" type="text" /><br />
         <input data-bind="description" name="description" class="edit input-description" type="text" /><br />
-        <input data-bind="contact_name" name="contact_name" class="edit input-contact" type="text" /><br />
-        <input data-bind="contact_email" name="contact_email" class="edit input-contact" type="text" /><br />
-        <select class="categories" data-bind="categories" /><br />
         <button class="save">Save</button> or <a class="cancel">Cancel</a>
     </div>
     <div class="edit-buttons">

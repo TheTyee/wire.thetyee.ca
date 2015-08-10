@@ -4,7 +4,6 @@
 </div>
 <script>
     var items_json = <%== $items %>;
-    var sources_json = <%== $sources %>;
     var cats_json = <%== $cats %>;
 </script>
 <script src="/js/app/app.js"></script>
