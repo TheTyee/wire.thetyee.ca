@@ -93,7 +93,7 @@ App.FeedItemCollection = Backbone.Collection.extend({
     page: 1,
     limit: 20,
     category: '',
-    hot: '',
+    hot: 'true',
     url: function(){
         return '/items/' + '?limit=' + this.limit + '&page=' + this.page + '&category=' + this.category + '&hot=' + this.hot;
     },
