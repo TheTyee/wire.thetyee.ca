@@ -93,8 +93,9 @@ App.FeedItemCollection = Backbone.Collection.extend({
     page: 1,
     limit: 20,
     category: '',
+    hot: '',
     url: function(){
-        return '/items/' + '?limit=' + this.limit + '&page=' + this.page + '&category=' + this.category;
+        return '/items/' + '?limit=' + this.limit + '&page=' + this.page + '&category=' + this.category + '&hot=' + this.hot;
     },
     //url: '/items.json',
     initialize: function(options){
@@ -128,13 +129,11 @@ App.HotItemCollection = Backbone.Collection.extend({
 
 App.SourceCollection = Backbone.Collection.extend({
     model: App.Source,
+    page: 1,
+    limit: 20,
     category: '',
     url: function(){
-        if ( this.category ) {
-            return '/sources/' + '?category=' + this.category;
-        } else {
-            return '/sources/';
-        }
+        return '/sources/' + '?limit=' + this.limit + '&page=' + this.page + '&category=' + this.category;
     },
     initialize: function(){
         console.log('Creating a new Sources collection');
@@ -143,9 +142,10 @@ App.SourceCollection = Backbone.Collection.extend({
 });
 
 App.sources = new App.SourceCollection();
-_.each(sources_json, function(item) {
-    App.sources.add(item);
-});
+// TODO (probably remove)
+//_.each(sources_json, function(item) {
+    //App.sources.add(item);
+//});
 
 App.CategoryCollection = Backbone.Collection.extend({
     model: App.Category,
@@ -197,7 +197,8 @@ App.FeedItemView = Backbone.View.extend({
     events: {
         "click button.delete": "deactivateModel",
         "click button.edit":   "editModel",
-        "click button.save":   "saveModel"
+        "click button.save":   "saveModel",
+        "click .cancel":       function() { this.$el.removeClass("editing"); }
     },
     bindings: {
         'h1[data-bind="title"]': 'title',
@@ -270,13 +271,11 @@ App.CategoryHeaderView = Backbone.View.extend({
         'h1[data-bind="name"]':
             {
             'observe': 'name',
-            // https://github.com/NYTimes/backbone.stickit#events
             'events': ['blur']
         },
         'h2[data-bind="description"]':
             {
             'observe': 'description',
-            // https://github.com/NYTimes/backbone.stickit#events
             'events': ['blur']
         }
     },
@@ -328,13 +327,16 @@ App.FeedNavigationView = Backbone.View.extend({
 
 App.SourcesView = Backbone.View.extend({
     collection: App.sources,
+    template: 'feed-app-sources',
     serialize: function() {
         return { items: this.collection };
     },
-    template: 'feed-app-sources',
     initialize: function () {
         console.log('SourcesView initialized');
         this.listenTo(this.collection, "remove reset sync", this.render);
+    },
+    events: {
+        "click .new" : "addSource"
     },
     render: function () {
     },
@@ -342,6 +344,17 @@ App.SourcesView = Backbone.View.extend({
         this.collection.each(function(item) {
             this.insertView(new App.SourceItemView({ model: item }));
         }, this);
+    },
+    addSource: function() {
+        console.log('Adding a source...');
+        //var source = new App.Source({
+                //"name": 'Give it a name',
+                //"description": 'And a description',
+                //"contact_name": 'Contact name',
+                //"contact_email": 'Contact email',
+                //"url": 'URL!'
+        //});
+        //App.sources.add( source );
     }
 });
 
@@ -439,6 +452,81 @@ App.SourceDetailView = Backbone.View.extend({
     }
 });
 
+App.CategoriesView = Backbone.View.extend({
+    collection: App.categories,
+    serialize: function() {
+        return { items: this.collection };
+    },
+    template: 'feed-app-categories',
+    initialize: function () {
+        console.log('CategoriesView initialized');
+        this.listenTo(this.collection, "remove reset sync", this.render);
+    },
+    render: function () {
+    },
+    beforeRender: function() {
+        this.collection.each(function(item) {
+            this.insertView(new App.CategoryItemView({ model: item }));
+        }, this);
+    }
+});
+
+App.CategoryItemView = Backbone.View.extend({
+    template: 'feed-app-category-item',
+    el: false,
+    events: {
+        "click button.delete": "deactivateModel",
+        "click button.edit":   "editModel",
+        "click button.save":   "saveModel",
+        "click .cancel":       function() { this.$el.removeClass("editing"); }
+    },
+    bindings: {
+        'h2[data-bind="name"]': 'name',
+        'p[data-bind="description"]': 'description',
+        'input[data-bind="name"]': 
+            {
+            'observe': 'name',
+            'events': ['blur'],
+        },
+        'input[data-bind="description"]': 
+            {
+            'observe': 'description',
+            'events': ['blur'],
+        }
+    },
+    initialize: function () {
+        console.log('CategoryItemView initialized');
+        //this.listenTo(this.model, 'change', this.saveModel);
+    },
+    render: function () {
+    },
+    afterRender: function() {
+        this.stickit();
+    },
+    saveModel: function(){
+        console.log("Saving...");
+        console.log(this.model);
+        this.model.save( 
+                        {   
+                            "id": this.model.get('id'),
+                            "name": this.model.get('name'),
+                            "description": this.model.get('description')
+                        }
+      , { patch: true });
+  //this.model.save();
+    },
+    deactivateModel: function() {
+        console.log('Deactivating item');
+        this.model.set("status", "deleted");
+        App.sources.remove(this.model);
+    },
+    editModel: function() {
+        console.log(this.$el);
+        this.$el.addClass("editing");
+    }
+});
+
+
 // ===================================================================
 // Layouts
 // ===================================================================
@@ -479,22 +567,25 @@ App.Router = Backbone.Router.extend({
     },
     displaySource: function(id) {
         console.log('displaying source id ' + id );
-        var source = App.sources.get(id);
-        console.log(source);
-        source.fetch(function(model, response, options){ console.log(response); },function(model, response, options){ console.log(response); } );
-        App.Layout.setView("#app-content", new App.SourceDetailView({ model: source }));
-        App.Layout.render();
+        var source = new App.Source({"id" : id });
+        source.fetch().done(function(){
+            console.log(source);
+            //source.fetch(function(model, response, options){ console.log(response); },function(model, response, options){ console.log(response); } );
+            App.Layout.setView("#app-content", new App.SourceDetailView({ model: source }));
+            App.Layout.render();
+        });
     },
     displaySources: function() {
         console.log('displaying sourcees');
         App.Layout.setView("#app-content", new App.SourcesView() );
+        App.sources.fetch();
         App.Layout.render();
     },
     displayCategories: function() {
         console.log('displaying categories');
         // TODO 
-        //  App.Layout.setView("#app-content", new App.SourcesView() );
-        //  App.Layout.render();
+        App.Layout.setView("#app-content", new App.CategoriesView() );
+        App.Layout.render();
     },
     displayCategory: function(id) {
         console.log('displaying category id ' + id );
@@ -506,7 +597,6 @@ App.Router = Backbone.Router.extend({
         //        var source = App.sources.get(id);
         //        source.fetch(function(model, response, options){ console.log(response); },function(model, response, options){ console.log(response); } );
         App.Layout.setView("#app-content", new App.FeedRiverView({ collection: App.categoryItems }));
-        App.Layout.setView("footer", new App.FeedNavigationView({ collection: App.categoryItems }));
         App.Layout.setView("header", new App.CategoryHeaderView({ model: category }));
         App.Layout.render();
 
