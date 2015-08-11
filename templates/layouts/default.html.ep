@@ -15,9 +15,9 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <header></header>
+        <header id="site-header"></header>
         <%= content %>
-        <footer></footer>
+        <footer id="site-footer"></footer>
     <script>
     $(function() {
         // Initialize the Backbone router.
