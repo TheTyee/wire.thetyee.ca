@@ -1,10 +1,6 @@
 <div class="app-source-detail">
-  <h3><a href="<%= url %>"><%= name %></a></label></h3>
-    <h4><%= description %></h4>
-    <p>Filed in: <%= category_name %></p>
-    <p>ID: <%= id %></p>
-    <p>Last Checked: <%= feed_updated %></p>
-</div>
+    <a href="<%= url %>"><h2 data-bind="name"></h2></a>
+    <p data-bind="description"></p>
     <div class="edit-form hidden">
         <input data-bind="name" name="name" class="edit input-name" type="text" /><br />
         <input data-bind="description" name="description" class="edit input-description" type="text" /><br />
@@ -17,6 +13,6 @@
         <button class="edit">Edit</button>
         <button class="delete">Delete</button>
     </div>
-<div id="items">
 </div>
+<div id="items">
 </div>
