@@ -415,6 +415,35 @@ App.SourceItemView = Backbone.View.extend({
 App.SourceDetailView = Backbone.View.extend({
     template: 'feed-app-source-detail',
     events: {
+        "click button.delete": "deactivateModel",
+        "click button.edit":   "editModel",
+        "click button.save":   "saveModel",
+        "click .cancel":       function() { this.$el.removeClass("editing"); }
+    },
+    bindings: {
+        'h2[data-bind="name"]': 'name',
+        'p[data-bind="description"]': 'description',
+        'span[data-bind="category"]': 'category',
+        'input[data-bind="name"]': 
+            {
+            'observe': 'name',
+            'events': ['blur'],
+        },
+        'input[data-bind="description"]': 
+            {
+            'observe': 'description',
+            'events': ['blur'],
+        },
+        'input[data-bind="contact_name"]': 'contact_name',
+        'input[data-bind="contact_email"]': 'contact_email', 
+        'select.categories': {
+            observe: 'category',
+            selectOptions: {
+                collection: App.categories,
+                labelPath: 'name',
+                valuePath: 'id'
+            }
+        }
     },
     initialize: function () {
         console.log('SourceDetailView initialized');
@@ -433,6 +462,33 @@ App.SourceDetailView = Backbone.View.extend({
         }, this); 
     },
     render: function () {
+    },
+    afterRender: function() {
+        this.stickit();
+    },
+    saveModel: function(){
+        console.log("Saving...");
+        console.log(this.model);
+        this.model.save( 
+                        {   
+                            "id": this.model.get('id'),
+                            "name": this.model.get('name'),
+                            "description": this.model.get('description'),
+                            "category": this.model.get('category'),
+                            "contact_name": this.model.get('contact_name'),
+                            "contact_email": this.model.get('contact_email')
+                        }
+      , { patch: true });
+  //this.model.save();
+    },
+    deactivateModel: function() {
+        console.log('Deactivating item');
+        this.model.set("status", "deleted");
+        App.sources.remove(this.model);
+    },
+    editModel: function() {
+        console.log(this.$el);
+        this.$el.addClass("editing");
     }
 });
 
