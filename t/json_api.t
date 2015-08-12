@@ -1,5 +1,6 @@
 use FindBin;
 use lib "$FindBin::Bin/../local/lib/perl5";
+#use lib "$FindBin::Bin/../lib";
 use Test::More;
 use Test::Mojo;
 use Data::Dumper;
@@ -27,11 +28,11 @@ $t->get_ok( '/items.json' )->status_is( 200, 'Right status for /items.json' );
 
 # Check for an array with 10 objects
 my $items = $t->ua->get( '/items.json' )->res->json;
-ok( @$items == 10, "Got an array of 10 items back" );
+ok( @$items == 20, "Got an array of 10 items back" );
 
 # Check the ?limit paramater
-my $limit = $t->ua->get( '/items.json?limit=20' )->res->json;
-ok( @$limit == 20, "Got an array of 20 items back" );
+my $limit = $t->ua->get( '/items.json?limit=30' )->res->json;
+ok( @$limit == 30, "Got an array of 20 items back" );
 
 # Check the ?page paramater
 my $page2 = $t->ua->get( '/items.json?page=2' )->res->json( '/0/title' );
